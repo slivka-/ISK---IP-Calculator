@@ -1,2 +1,2 @@
-# ISK---IP-Calculator
+# ISK - IP Calculator
 Complex IP Calculator
