@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IP_Calculator"
         mc:Ignorable="d"
-        Title="IP Calculator" Height="350" Width="525">
+        Title="IP Calculator" Height="436.275" Width="719.118">
     <Grid>
-        <Label Name="mainLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,50,0,0" Width="150"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="571*"/>
+            <ColumnDefinition Width="96*"/>
+            <ColumnDefinition Width="44*"/>
+        </Grid.ColumnDefinitions>
+        <Label Name="mainLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,50,0,0" Width="150" Height="10"/>
+        <TabControl HorizontalAlignment="Left" Height="348" Margin="35,33,0,0" VerticalAlignment="Top" Width="624" Grid.ColumnSpan="2">
+            <TabItem Header="Automatic" Margin="-2,0" Height="36" VerticalAlignment="Bottom">
+                <Grid  Name="xff" Background="#FFE5E5E5" Margin="10,0,6,6">
+                    <DataGrid x:Name="table" HorizontalAlignment="Left" Height="215" Margin="60,60,0,0" VerticalAlignment="Top" Width="484" CanUserDeleteRows="True"/>
+                    <ComboBox x:Name="combo" HorizontalAlignment="Left" Margin="424,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
+                    <Label Content="&#x9;Choose conection" HorizontalAlignment="Left" Margin="266,16,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Manual">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="tableManual" HorizontalAlignment="Left" Height="215" Margin="37,79,0,0" VerticalAlignment="Top" Width="545" CanUserDeleteRows="True" SelectionChanged="tableManual_SelectionChanged"/>
+                    <Label Content="Adres IP" HorizontalAlignment="Left" Margin="37,10,0,0" VerticalAlignment="Top" Width="61"/>
+                    <TextBox Name="adresIp" HorizontalAlignment="Left" Height="23" Margin="128,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.778,0.545"/>
+                    <Label Content="Host amount" HorizontalAlignment="Left" Margin="37,33,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.831,0.54"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="128,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="Calculate" HorizontalAlignment="Left" Margin="507,36,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+                    <RadioButton Content="Minimal networks" HorizontalAlignment="Left" Margin="284,11,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" Height="23"/>
+                    <RadioButton Content="Minimal networks size" HorizontalAlignment="Left" Margin="284,39,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" Height="20"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
