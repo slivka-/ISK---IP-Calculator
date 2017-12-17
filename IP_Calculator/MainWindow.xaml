@@ -7,30 +7,43 @@
         mc:Ignorable="d"
         Title="IP Calculator" Height="436.275" Width="719.118">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="571*"/>
-            <ColumnDefinition Width="96*"/>
-            <ColumnDefinition Width="44*"/>
+            <ColumnDefinition Width="667*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Name="mainLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,50,0,0" Width="150" Height="10"/>
-        <TabControl HorizontalAlignment="Left" Height="348" Margin="35,33,0,0" VerticalAlignment="Top" Width="624" Grid.ColumnSpan="2">
+        <TabControl HorizontalAlignment="Left" Height="348" Margin="35,33,0,0" VerticalAlignment="Top" Width="624">
             <TabItem Header="Automatic" Margin="-2,0" Height="36" VerticalAlignment="Bottom">
-                <Grid  Name="xff" Background="#FFE5E5E5" Margin="10,0,6,6">
-                    <DataGrid x:Name="table" HorizontalAlignment="Left" Height="215" Margin="60,60,0,0" VerticalAlignment="Top" Width="484" CanUserDeleteRows="True"/>
-                    <ComboBox x:Name="combo" HorizontalAlignment="Left" Margin="424,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
-                    <Label Content="&#x9;Choose conection" HorizontalAlignment="Left" Margin="266,16,0,0" VerticalAlignment="Top"/>
+                <Grid  Name="nuevo" Background="#FFE5E5E5" Margin="8,10,12,10" >
+                    <DataGrid x:Name="table" HorizontalAlignment="Left" Height="230" Margin="60,36,0,0" VerticalAlignment="Top" Width="484" CanUserDeleteRows="True" HeadersVisibility="None" SelectionChanged="table_SelectionChanged" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Hidden" />
+                    <ComboBox x:Name="combo" HorizontalAlignment="Left" Margin="424,8,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged"/>
+                    <Label Content="&#x9;Choose conection" HorizontalAlignment="Left" Margin="266,6,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Manual">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="tableManual" HorizontalAlignment="Left" Height="215" Margin="37,79,0,0" VerticalAlignment="Top" Width="545" CanUserDeleteRows="True" SelectionChanged="tableManual_SelectionChanged"/>
-                    <Label Content="Adres IP" HorizontalAlignment="Left" Margin="37,10,0,0" VerticalAlignment="Top" Width="61"/>
-                    <TextBox Name="adresIp" HorizontalAlignment="Left" Height="23" Margin="128,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.778,0.545"/>
-                    <Label Content="Host amount" HorizontalAlignment="Left" Margin="37,33,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.831,0.54"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="128,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Button Content="Calculate" HorizontalAlignment="Left" Margin="507,36,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-                    <RadioButton Content="Minimal networks" HorizontalAlignment="Left" Margin="284,11,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" Height="23"/>
-                    <RadioButton Content="Minimal networks size" HorizontalAlignment="Left" Margin="284,39,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" Height="20"/>
+                <Grid Background="#FFE5E5E5" Margin="10,10,10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="69*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="tableManual" HorizontalAlignment="Left" Height="192
+                              " Margin="50,68,0,0" VerticalAlignment="Top" Width="500" CanUserDeleteRows="True" SelectionChanged="tableManual_SelectionChanged" HeadersVisibility="None" VerticalScrollBarVisibility="Hidden" />
+                    <Label Content="Adres IP" HorizontalAlignment="Left" Margin="47,10,0,0" VerticalAlignment="Top" Width="61"/>
+                    <TextBox Name="adresIp" HorizontalAlignment="Left" Height="23" Margin="128,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" RenderTransformOrigin="0.778,0.545"/>
+                    <Label Content="Host amount" HorizontalAlignment="Left" Margin="47,33,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.831,0.54"/>
+                    <Button Content="Calculate" HorizontalAlignment="Left" Margin="475,36,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+                    <RadioButton Content="Minimal networks" HorizontalAlignment="Left" Margin="322,11,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" Height="23"/>
+                    <RadioButton Content="Minimal networks size" HorizontalAlignment="Left" Margin="322,39,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" Height="20"/>
+                    <ComboBox  Margin="263,11,288,240" x:Name="Hostbits" SelectionChanged="Hostbits_SelectionChanged" />
+                    <TextBox x:Name="adresIp_Copy" HorizontalAlignment="Left" Height="23" Margin="128,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" RenderTransformOrigin="0.778,0.545"/>
+                    <Label Content="/" HorizontalAlignment="Left" Margin="238,11,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="2.205,0.611"/>
                 </Grid>
             </TabItem>
         </TabControl>
