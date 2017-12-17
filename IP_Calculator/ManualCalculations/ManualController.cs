@@ -29,7 +29,7 @@ namespace IP_Calculator.ManualCalculations
 
         private byte[] Text2byte(string ipAddress)
         {
-            String[] ip = (ipAddress).Split(new Char[] { ',', '.' });
+            String[] ip = (ipAddress).Split('.');
             byte[] octets = new byte[4];
 
             octets[0] = byte.Parse(ip[0]);

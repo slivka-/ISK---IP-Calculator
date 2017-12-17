@@ -89,7 +89,7 @@ namespace IP_Calculator
 
         private void IpAdressBox_KeyUp(object sender, KeyEventArgs e)
         {
-            manualController.ipAddress = IpAdressBox.Text;
+            manualController.ipAddress = IpAdressBox.Text.Replace("_",String.Empty);
         }
 
         private void Hostbits_SelectionChanged(object sender, SelectionChangedEventArgs e)
