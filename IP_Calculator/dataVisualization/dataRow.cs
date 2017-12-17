@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IP_Calculator.dataVisualization
+namespace IP_Calculator.DataVisualization
 {
-    class dataRow
+    class DataRow
     {
 
         public String Name { get; set; }

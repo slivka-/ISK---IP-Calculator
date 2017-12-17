@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IPCalc
+namespace IP_Calculator.ManualCalculations
 {
     class IPCalculation
     {
-        byte cidr=0;
+        byte cidr = 0;
         UInt32 hostnumber = 0;
         InternetProtocolAddress ip;
         InternetProtocolAddress networkaddress;
@@ -71,7 +67,7 @@ namespace IPCalc
             {
                 hosts *= 2;
             }
-            hostnumber= hosts - 2;
+            hostnumber = hosts - 2;
         }
 
         public InternetProtocolAddress getIp()

@@ -77,16 +77,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Binary.cs" />
-    <Compile Include="dataVisualization\dataRow.cs" />
-    <Compile Include="InternetProtocolAddress.cs" />
-    <Compile Include="IPCalculation.cs" />
+    <Compile Include="DataVisualization\ManualDataRow.cs" />
+    <Compile Include="ManualCalculations\Binary.cs" />
+    <Compile Include="DataVisualization\DataRow.cs" />
+    <Compile Include="ManualCalculations\InternetProtocolAddress.cs" />
+    <Compile Include="ManualCalculations\IPCalculation.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManualCalculations\ManualController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

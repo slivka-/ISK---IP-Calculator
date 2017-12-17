@@ -13,39 +13,43 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IP_Calculator.dataVisualization;
-using IPCalc;
+using IP_Calculator.DataVisualization;
+using IP_Calculator.ManualCalculations;
 
 namespace IP_Calculator
 {
     public partial class MainWindow : Window
     {
+        private ObservableCollection<ManualDataRow> manualData = new ObservableCollection<ManualDataRow>();
+
+        private ManualController manualController;
+
         public MainWindow()
         {          
             InitializeComponent();
-            calculateAutomaticly();
-            init_hostbits();
+            InitManualCalculations();
+            CalculateAutomaticly();
         }
 
         private void createTableAutomaticly(IPCalculation ipc)
         {            
-            var dt = new ObservableCollection<dataRow>
+            var dt = new ObservableCollection<DataRow>
             {                
-                new dataRow(){Name = "Address",              Data = ipc.getIp()+"",                Binary =ipc.getIp().ToBinaryString() },
-                new dataRow(){Name = "Netmask",              Data = ipc.getNetmask()+" = 24",      Binary =ipc.getNetmask().ToBinaryString()},
-                new dataRow(){Name = "Wildcard",             Data = ipc.getWildcard()+ "",         Binary =ipc.getWildcard().ToBinaryString()  },
-                new dataRow(){Name = "Network" ,             Data = ipc.getNetworkAddress()+"/24", Binary =ipc.getNetworkAddress().ToBinaryString()+""  },
-                new dataRow(){Name = "Host Min" ,            Data = ipc.getfirstAddress()+"",      Binary =ipc.getfirstAddress().ToBinaryString()+"" },
-                new dataRow(){Name = "Host Max" ,            Data = ipc.getLastAddress()+"",       Binary =ipc.getLastAddress().ToBinaryString()+""  },
-                new dataRow(){Name = "Broadcast",            Data = ipc.getBroadcastAddress()+"",  Binary =ipc.getBroadcastAddress().ToBinaryString()+"" },
+                new DataRow(){Name = "Address",              Data = ipc.getIp()+"",                Binary =ipc.getIp().ToBinaryString() },
+                new DataRow(){Name = "Netmask",              Data = ipc.getNetmask()+" = 24",      Binary =ipc.getNetmask().ToBinaryString()},
+                new DataRow(){Name = "Wildcard",             Data = ipc.getWildcard()+ "",         Binary =ipc.getWildcard().ToBinaryString()  },
+                new DataRow(){Name = "Network" ,             Data = ipc.getNetworkAddress()+"/24", Binary =ipc.getNetworkAddress().ToBinaryString()+""  },
+                new DataRow(){Name = "Host Min" ,            Data = ipc.getfirstAddress()+"",      Binary =ipc.getfirstAddress().ToBinaryString()+"" },
+                new DataRow(){Name = "Host Max" ,            Data = ipc.getLastAddress()+"",       Binary =ipc.getLastAddress().ToBinaryString()+""  },
+                new DataRow(){Name = "Broadcast",            Data = ipc.getBroadcastAddress()+"",  Binary =ipc.getBroadcastAddress().ToBinaryString()+"" },
                 //
-                new dataRow(){Name = "Hosts/Net",            Data = ipc.getHostnumber()+"" ,       Binary ="Class C, Private Internet"},
+                new DataRow(){Name = "Hosts/Net",            Data = ipc.getHostnumber()+"" ,       Binary ="Class C, Private Internet"},
                 //
-                new dataRow(){Name = "Host amount",          Data = "251" ,                        Binary =""},
+                new DataRow(){Name = "Host amount",          Data = "251" ,                        Binary =""},
                 //
-                new dataRow(){Name = "Amount of free host",  Data = "3" ,                          Binary =((5.88)).ToString()+"%"},
-                new dataRow(){Name = "Host Address Size",    Data = ipc.getHostBits() + " Bits" ,  Binary =""},
-                new dataRow(){Name = "Network Address Size", Data = ipc.getNetworkBits() + " Bits",Binary =""}
+                new DataRow(){Name = "Amount of free host",  Data = "3" ,                          Binary =((5.88)).ToString()+"%"},
+                new DataRow(){Name = "Host Address Size",    Data = ipc.getHostBits() + " Bits" ,  Binary =""},
+                new DataRow(){Name = "Network Address Size", Data = ipc.getNetworkBits() + " Bits",Binary =""}
          
             };
             table.ItemsSource = dt;
@@ -54,32 +58,20 @@ namespace IP_Calculator
             combo.Items.Add("Ethernet");
 
         }
- 
 
-        private void createTableManual(IPCalculation ipc)
+        private void CalculateAutomaticly()
         {
-            var dt = new ObservableCollection<dataRow>
-            {
-                new dataRow(){Name = "Netmask",     Data = ipc.getNetmask()+" = "+Hostbits.SelectedItem,       Binary =ipc.getNetmask().ToBinaryString()},
-                new dataRow(){Name = "Wildcard",    Data = ipc.getWildcard()+"",                               Binary =ipc.getWildcard().ToBinaryString() },
-                new dataRow(){Name = "Network" ,    Data = ipc.getNetworkAddress()+"/"+Hostbits.SelectedItem,  Binary =ipc.getNetworkAddress().ToBinaryString() },
-                new dataRow(){Name = "Host Min" ,   Data = ipc.getfirstAddress()+"",                           Binary =ipc.getfirstAddress().ToBinaryString() },
-                new dataRow(){Name = "Host Max" ,   Data = ipc.getLastAddress()+"",                            Binary =ipc.getLastAddress().ToBinaryString() },
-                new dataRow(){Name = "Broadcast",   Data = ipc.getBroadcastAddress()+"",                       Binary =ipc.getBroadcastAddress().ToBinaryString() },
-                //
-                new dataRow(){Name = "Hosts/Net",   Data = ipc.getHostnumber()+"" ,                            Binary ="Class C, Private Internet"},
-                //
-                new dataRow(){Name = "Amount of free host", Data = "3" ,                                       Binary =((5.88)).ToString()+"%"},
-                new dataRow(){Name = "Host Address Size",   Data = ipc.getHostBits() + " Bits" ,               Binary =""},
-                new dataRow(){Name = "Network Address Size",Data = ipc.getNetworkBits() + " Bits" ,            Binary =""}
-
-            };
-            tableManual.ItemsSource = dt;
-
+            InternetProtocolAddress ip = new InternetProtocolAddress(192, 168, 178, 222);
+            IPCalculation ipc = new IPCalculation(ip, byte.Parse("24"));
+            createTableAutomaticly(ipc);
         }
 
-        private void init_hostbits()
+        private void InitManualCalculations()
         {
+            manualController = new ManualController();
+
+            tableManual.ItemsSource = manualController.ManualDataCollection;
+
             for (int i = 1; i < 32; i++)
             {
                 Hostbits.Items.Add(i.ToString());
@@ -87,73 +79,39 @@ namespace IP_Calculator
             Hostbits.SelectedItem = "24";
         }
 
-        private void calculateManual()
+        #region Controls event handlers
+
+        private void CalculateBtn_Click(object sender, RoutedEventArgs e)
         {
-            byte[] octets = text2byte();
-            InternetProtocolAddress ip = new InternetProtocolAddress(octets[0], octets[1], octets[2], octets[3]);            
-            IPCalculation ipc = new IPCalculation(ip, byte.Parse(Hostbits.SelectedItem.ToString()));
-            createTableManual(ipc);
+            manualController.CalculateManual();
+            tableManual.Items.Refresh();
         }
 
-        private void calculateAutomaticly()
+        private void IpAdressBox_KeyUp(object sender, KeyEventArgs e)
         {
-            InternetProtocolAddress ip = new InternetProtocolAddress(192,168,178,222);
-            IPCalculation ipc = new IPCalculation(ip, byte.Parse("24"));
-            createTableAutomaticly(ipc);
-        }
-
-        private byte[] text2byte()
-        {            
-            String[] ip = (adresIp.Text).Split(new Char[] { ',', '.' });
-            byte[] octets = new byte[4];
-
-            octets[0] = byte.Parse(ip[0]);
-            octets[1] = byte.Parse(ip[1]);
-            octets[2] = byte.Parse(ip[2]);
-            octets[3] = byte.Parse(ip[3]);
-
-            return octets;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            calculateManual();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-
-        }
-
-        private void DataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
-
-        private void tableManual_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }        
-
-        private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            manualController.ipAddress = IpAdressBox.Text;
         }
 
         private void Hostbits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            manualController.hostBits = Hostbits.SelectedItem.ToString();
         }
+
+        private void ShowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).Tag != null)
+            {
+                int rowToSwitch = (int)((Button)sender).Tag;
+                var row = manualController.ManualDataCollection.Where(w => w.Id == rowToSwitch).Single();
+                row.ShowBinary = !row.ShowBinary;
+                tableManual.Items.Refresh();
+                foreach (var col in tableManual.Columns)
+                {
+                    col.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+                }
+            }
+        }
+
+        #endregion
     }
 }
