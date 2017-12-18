@@ -2,6 +2,8 @@
 
 using IP_Calculator.DataVisualization;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IP_Calculator.ManualCalculations
 {
@@ -25,18 +27,51 @@ namespace IP_Calculator.ManualCalculations
             ManualDataCollection.Clear();
             if (isMinNumber)
             {
-                InternalAddressRow addrRow = CalculateMinimalNetworksNum(ipAddress);
+                InternalAddressRow addrRow = CalculateMinimalNetworksNum();
                 IPCalculation ipc = new IPCalculation(addrRow.Ip, addrRow.Netmask);
                 AddManualRow(ipc);
             }
             else if (isMinSize)
             {
-
+                var addrRows = CalculateMinimalNetworksSize();
+                foreach (var row in addrRows)
+                {
+                    IPCalculation ipc = new IPCalculation(row.Ip, row.Netmask);
+                    AddManualRow(ipc);
+                }
             }
             
         }
 
-        private InternalAddressRow CalculateMinimalNetworksNum(string startingAddress)
+        private List<InternalAddressRow> CalculateMinimalNetworksSize()
+        {
+            List<InternalAddressRow> output = new List<InternalAddressRow>();
+            int tempHosts = hostsNumber;
+            int networkSize = 1;
+            while (networkSize < hostsNumber)
+                networkSize *= 2;
+            networkSize /= 2;
+
+            uint baseIp = ByteArr2Uint(Text2byte(ipAddress));
+
+            while (tempHosts > 0)
+            {
+                output.Add(new InternalAddressRow()
+                {
+                    Ip = new InternetProtocolAddress(baseIp),
+                    Netmask = Byte.Parse((32 - (int)Math.Log(networkSize, 2)).ToString()),
+                    HostsNumber = networkSize
+                });
+                baseIp += (uint)networkSize;
+                tempHosts -= networkSize;
+                networkSize = (networkSize > 1) ? networkSize / 2 : 1;
+            }
+
+
+            return output;
+        }
+
+        private InternalAddressRow CalculateMinimalNetworksNum()
         {
             int networkSize = 1;
             while (networkSize < hostsNumber)
@@ -65,6 +100,14 @@ namespace IP_Calculator.ManualCalculations
             octets[3] = byte.Parse(ip[3]);
 
             return octets;
+        }
+
+        private uint ByteArr2Uint(byte[] arr)
+        {
+            if (BitConverter.IsLittleEndian)
+                return BitConverter.ToUInt32(arr.Reverse().ToArray(), 0);
+            else
+                return BitConverter.ToUInt32(arr,0);
         }
 
         private void AddManualRow(IPCalculation ipc)
