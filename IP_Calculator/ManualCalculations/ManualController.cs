@@ -9,7 +9,9 @@ namespace IP_Calculator.ManualCalculations
     {
         public string ipAddress;
 
-        public string hostBits;
+        public string hostBits;//netmask bits length
+
+        public int hostsNumber;
 
         public ObservableCollection<ManualDataRow> ManualDataCollection { get; set; }
 
@@ -18,13 +20,38 @@ namespace IP_Calculator.ManualCalculations
             ManualDataCollection = new ObservableCollection<ManualDataRow>();
         }
 
-        public void CalculateManual()
+        public void CalculateManual(bool isMinNumber, bool isMinSize, int? freeAddr = null, int? minNetworks = null)
         {
             ManualDataCollection.Clear();
+            if (isMinNumber)
+            {
+                InternalAddressRow addrRow = CalculateMinimalNetworksNum(ipAddress);
+                IPCalculation ipc = new IPCalculation(addrRow.Ip, addrRow.Netmask);
+                AddManualRow(ipc);
+            }
+            else if (isMinSize)
+            {
+
+            }
+            
+        }
+
+        private InternalAddressRow CalculateMinimalNetworksNum(string startingAddress)
+        {
+            int networkSize = 1;
+            while (networkSize < hostsNumber)
+                networkSize *= 2;
+
+            byte netmask = Byte.Parse((32 - (int)Math.Log(networkSize, 2)).ToString());
+
             byte[] octets = Text2byte(ipAddress);
-            InternetProtocolAddress ip = new InternetProtocolAddress(octets[0], octets[1], octets[2], octets[3]);
-            IPCalculation ipc = new IPCalculation(ip, byte.Parse(hostBits));
-            AddManualRow(ipc);
+            return new InternalAddressRow()
+            {
+                Ip = new InternetProtocolAddress(octets[0], octets[1], octets[2], octets[3]),
+                Netmask = netmask,
+                HostsNumber = hostsNumber
+            };
+
         }
 
         private byte[] Text2byte(string ipAddress)
@@ -74,6 +101,14 @@ namespace IP_Calculator.ManualCalculations
 
                 }
             );
+        }
+
+        private class InternalAddressRow
+        {
+            public InternetProtocolAddress Ip { get; set; }
+            public byte Netmask { get; set; }
+            public int HostsNumber { get; set; }
+
         }
     }
 }

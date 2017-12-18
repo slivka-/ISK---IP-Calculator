@@ -83,7 +83,7 @@ namespace IP_Calculator
 
         private void CalculateBtn_Click(object sender, RoutedEventArgs e)
         {
-            manualController.CalculateManual();
+            manualController.CalculateManual((bool)MinNetworkNumRadio.IsChecked, (bool)MinNetworkSizeRadio.IsChecked);
             tableManual.Items.Refresh();
         }
 
@@ -95,6 +95,12 @@ namespace IP_Calculator
         private void Hostbits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             manualController.hostBits = Hostbits.SelectedItem.ToString();
+        }
+
+        private void HostsAmount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if(manualController != null && HostsAmount.Value != null)
+                manualController.hostsNumber = (int)HostsAmount.Value;
         }
 
         private void ShowBtn_Click(object sender, RoutedEventArgs e)
@@ -112,6 +118,10 @@ namespace IP_Calculator
             }
         }
 
+
+
         #endregion
+
+
     }
 }
