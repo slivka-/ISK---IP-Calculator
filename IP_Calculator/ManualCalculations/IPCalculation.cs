@@ -67,7 +67,7 @@ namespace IP_Calculator.ManualCalculations
             {
                 hosts *= 2;
             }
-            hostnumber = hosts - 2;
+            hostnumber = hosts - 3;
         }
 
         public InternetProtocolAddress getIp()

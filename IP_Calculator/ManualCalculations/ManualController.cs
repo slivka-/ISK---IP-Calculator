@@ -46,28 +46,20 @@ namespace IP_Calculator.ManualCalculations
         private List<InternalAddressRow> CalculateMinimalNetworksSize()
         {
             List<InternalAddressRow> output = new List<InternalAddressRow>();
-            int tempHosts = hostsNumber;
-            int networkSize = 1;
-            while (networkSize < hostsNumber)
-                networkSize *= 2;
-            networkSize /= 2;
+            var netmasks = GetMinimalSizes();
 
             uint baseIp = ByteArr2Uint(Text2byte(ipAddress));
 
-            while (tempHosts > 0)
-            {
+            foreach(var netmask in netmasks)
+            { 
                 output.Add(new InternalAddressRow()
                 {
                     Ip = new InternetProtocolAddress(baseIp),
-                    Netmask = Byte.Parse((32 - (int)Math.Log(networkSize, 2)).ToString()),
-                    HostsNumber = networkSize
+                    Netmask = Byte.Parse((32 - (int)Math.Log(netmask, 2)).ToString()),
+                    HostsNumber = netmask-3
                 });
-                baseIp += (uint)networkSize;
-                tempHosts -= networkSize;
-                networkSize = (networkSize > 1) ? networkSize / 2 : 1;
+                baseIp += (uint)netmask;
             }
-
-
             return output;
         }
 
@@ -109,6 +101,26 @@ namespace IP_Calculator.ManualCalculations
             else
                 return BitConverter.ToUInt32(arr,0);
         }
+
+        private List<int> GetMinimalSizes()
+        {
+            var output = new List<int>();
+            int tempHosts = hostsNumber;
+
+            while (tempHosts > 0)
+            {
+                int networkSize = 1;
+                while (networkSize < tempHosts+3)
+                    networkSize *= 2;
+                if (networkSize != tempHosts + 3)
+                    networkSize /= 2;
+
+                output.Add(networkSize);
+                tempHosts -= (networkSize-3);
+            }
+            return output;
+        }
+
 
         private void AddManualRow(IPCalculation ipc)
         {
