@@ -27,43 +27,45 @@ namespace IP_Calculator.ManualCalculations
             ManualDataCollection.Clear();
             if (isMinNumber)
             {
-                InternalAddressRow addrRow = CalculateMinimalNetworksNum();
+                InternalAddressRow addrRow = CalculateMinimalNetworksNum(freeAddr);
                 IPCalculation ipc = new IPCalculation(addrRow.Ip, addrRow.Netmask);
-                AddManualRow(ipc);
+                AddManualRow(ipc, addrRow.HostsNumber);
             }
             else if (isMinSize)
             {
-                var addrRows = CalculateMinimalNetworksSize();
+                var addrRows = CalculateMinimalNetworksSize(freeAddr);
                 foreach (var row in addrRows)
                 {
                     IPCalculation ipc = new IPCalculation(row.Ip, row.Netmask);
-                    AddManualRow(ipc);
+                    AddManualRow(ipc, row.HostsNumber);
                 }
             }
             
         }
 
-        private List<InternalAddressRow> CalculateMinimalNetworksSize()
+        private List<InternalAddressRow> CalculateMinimalNetworksSize(int? freeAddr)
         {
+            double freePercent = (freeAddr != null) ? ((double)freeAddr/100) : 0.0;
             List<InternalAddressRow> output = new List<InternalAddressRow>();
-            var netmasks = GetMinimalSizes();
+
+            var netmasks = GetMinimalSizes(freePercent);
 
             uint baseIp = ByteArr2Uint(Text2byte(ipAddress));
 
             foreach(var netmask in netmasks)
-            { 
+            {
                 output.Add(new InternalAddressRow()
                 {
                     Ip = new InternetProtocolAddress(baseIp),
                     Netmask = Byte.Parse((32 - (int)Math.Log(netmask, 2)).ToString()),
-                    HostsNumber = netmask-3
+                    HostsNumber = netmask - 3 - (int)(netmask * freePercent)
                 });
                 baseIp += (uint)netmask;
             }
             return output;
         }
 
-        private InternalAddressRow CalculateMinimalNetworksNum()
+        private InternalAddressRow CalculateMinimalNetworksNum(int? freeAddr)
         {
             int networkSize = 1;
             while (networkSize < hostsNumber)
@@ -102,7 +104,7 @@ namespace IP_Calculator.ManualCalculations
                 return BitConverter.ToUInt32(arr,0);
         }
 
-        private List<int> GetMinimalSizes()
+        private List<int> GetMinimalSizes(double freeAddr)
         {
             var output = new List<int>();
             int tempHosts = hostsNumber;
@@ -116,45 +118,49 @@ namespace IP_Calculator.ManualCalculations
                     networkSize /= 2;
 
                 output.Add(networkSize);
-                tempHosts -= (networkSize-3);
+                if (networkSize != tempHosts + 3)
+                    tempHosts -= (networkSize - 3) - (int)(networkSize * freeAddr);
+                else
+                    tempHosts -= (networkSize - 3);
             }
             return output;
         }
 
 
-        private void AddManualRow(IPCalculation ipc)
+        private void AddManualRow(IPCalculation ipc, int usedHostsNumber)
         {
             int lp = ManualDataCollection.Count + 1;
             ManualDataCollection.Add(new ManualDataRow()
-                {
-                    Id = lp,
-                    ShowBinary = false,
-                    
-                    IpAddress = ipc.getNetworkAddress().ToString(),
-                    BinaryIpAddress = ipc.getNetworkAddress().ToBinaryString(),
+            {
+                Id = lp,
+                ShowBinary = false,
 
-                    NetMask = ipc.getNetmask().ToString(),
-                    BinaryNetMask = ipc.getNetmask().ToBinaryString(),
+                IpAddress = ipc.getNetworkAddress().ToString(),
+                BinaryIpAddress = ipc.getNetworkAddress().ToBinaryString(),
 
-                    HostMin = ipc.getfirstAddress().ToString(),
-                    BinaryHostMin = ipc.getfirstAddress().ToBinaryString(),
+                NetMask = ipc.getNetmask().ToString(),
+                BinaryNetMask = ipc.getNetmask().ToBinaryString(),
 
-                    HostMax = ipc.getLastAddress().ToString(),
-                    BinaryHostMax = ipc.getLastAddress().ToBinaryString(),
+                HostMin = ipc.getfirstAddress().ToString(),
+                BinaryHostMin = ipc.getfirstAddress().ToBinaryString(),
 
-                    Broadcast = ipc.getBroadcastAddress().ToString(),
-                    BinaryBroadcast = ipc.getBroadcastAddress().ToBinaryString(),
+                HostMax = ipc.getLastAddress().ToString(),
+                BinaryHostMax = ipc.getLastAddress().ToBinaryString(),
 
-                    Wildcard = ipc.getWildcard().ToString(),
-                    BinaryWildcard = ipc.getWildcard().ToBinaryString(),
+                Broadcast = ipc.getBroadcastAddress().ToString(),
+                BinaryBroadcast = ipc.getBroadcastAddress().ToBinaryString(),
 
-                    HostsNum = ipc.getHostnumber().ToString(),
+                Wildcard = ipc.getWildcard().ToString(),
+                BinaryWildcard = ipc.getWildcard().ToBinaryString(),
 
-                    HostAddressSize = ipc.getHostBits().ToString(),
+                HostsNum = ipc.getHostnumber().ToString(),
 
-                    NetAddressSize = ipc.getNetworkBits().ToString()
+                HostAddressSize = ipc.getHostBits().ToString(),
 
-                }
+                NetAddressSize = ipc.getNetworkBits().ToString(),
+
+                FreeHosts = (ipc.getHostnumber() - (uint)usedHostsNumber).ToString()
+            }
             );
         }
 
@@ -163,7 +169,6 @@ namespace IP_Calculator.ManualCalculations
             public InternetProtocolAddress Ip { get; set; }
             public byte Netmask { get; set; }
             public int HostsNumber { get; set; }
-
         }
     }
 }

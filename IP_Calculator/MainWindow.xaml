@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Name="mainLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,50,0,0" Width="150" Height="10"/>
-        <TabControl HorizontalAlignment="Stretch" Height="348" Margin="35,33,35,0" VerticalAlignment="Top">
+        <TabControl HorizontalAlignment="Stretch" Height="348" Margin="35,33,35,0" VerticalAlignment="Top" SelectedIndex="1">
             <TabItem Header="Automatic" Margin="-2,0" Height="36" VerticalAlignment="Bottom">
                 <Grid  Name="nuevo" Background="#FFE5E5E5" Margin="8,10,12,10" >
                     <DataGrid x:Name="table" HorizontalAlignment="Left" Height="230" Margin="60,36,0,0" VerticalAlignment="Top" Width="484" CanUserDeleteRows="True" HeadersVisibility="None" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Hidden" />
@@ -30,7 +30,9 @@
             </TabItem>
             <TabItem Header="Manual">
                 <Grid Background="#FFE5E5E5" Margin="10,10,10,10">
-                    <DataGrid x:Name="tableManual" HorizontalAlignment="Stretch" Height="192" HeadersVisibility="Column" Margin="20,68,20,0" VerticalAlignment="Top" CanUserDeleteRows="True"  VerticalScrollBarVisibility="Hidden" AutoGenerateColumns="False" >
+                    <DataGrid x:Name="tableManual" HorizontalAlignment="Stretch" Height="192" HeadersVisibility="Column" 
+                              Margin="20,68,20,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" 
+                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="IP Adress" Binding="{Binding IpAddress}" Width="Auto"/>
                             <DataGridTextColumn Header="Subnet mask" Binding="{Binding NetMask}" Width="Auto"/>

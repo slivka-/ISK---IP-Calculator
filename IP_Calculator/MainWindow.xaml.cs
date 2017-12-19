@@ -83,7 +83,10 @@ namespace IP_Calculator
 
         private void CalculateBtn_Click(object sender, RoutedEventArgs e)
         {
-            manualController.CalculateManual((bool)MinNetworkNumRadio.IsChecked, (bool)MinNetworkSizeRadio.IsChecked);
+            if(NetworkPercent.IsChecked!= null && NetworkPercent.IsChecked == true)
+                manualController.CalculateManual((bool)MinNetworkNumRadio.IsChecked, (bool)MinNetworkSizeRadio.IsChecked, NetworkPercentNum.Value);
+            else
+                manualController.CalculateManual((bool)MinNetworkNumRadio.IsChecked, (bool)MinNetworkSizeRadio.IsChecked);
             tableManual.Items.Refresh();
         }
 
