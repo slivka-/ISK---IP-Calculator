@@ -31,8 +31,9 @@
             <TabItem Header="Manual">
                 <Grid Background="#FFE5E5E5" Margin="10,10,10,10">
                     <DataGrid x:Name="tableManual" HorizontalAlignment="Stretch" Height="192" HeadersVisibility="Column" 
-                              Margin="20,68,20,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" 
-                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                              Margin="20,68,20,0" VerticalAlignment="Top"  
+                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                              VerticalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="IP Adress" Binding="{Binding IpAddress}" Width="Auto"/>
                             <DataGridTextColumn Header="Subnet mask" Binding="{Binding NetMask}" Width="Auto"/>
@@ -53,17 +54,17 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Label Content="IP Adress:" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top" Width="61"/>
-                    <xctk:MaskedTextBox x:Name="IpAdressBox" HorizontalAlignment="Left" Height="23" Margin="128,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Mask="099\.099\.099\.099" KeyUp="IpAdressBox_KeyUp"/>
-                    
-                    <Label Content="Hosts amount:" HorizontalAlignment="Left" Margin="40,33,0,0" VerticalAlignment="Top" Width="86"/>
-                    <xctk:IntegerUpDown x:Name="HostsAmount" HorizontalAlignment="Left" Height="23" Margin="128,37,0,0" VerticalAlignment="Top" Width="99" Minimum="1" Value="1" ValueChanged="HostsAmount_ValueChanged" />
-                    
-                    <Label Content="/" HorizontalAlignment="Left" Margin="232,7,0,0" VerticalAlignment="Top" Width="25" Height="26"/>
-                    <ComboBox  Margin="253,11,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="Hostbits" SelectionChanged="Hostbits_SelectionChanged"  />
+                    <Label Content="IP Adress:" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Width="61"/>
+                    <xctk:MaskedTextBox x:Name="IpAdressBox" HorizontalAlignment="Left" Height="23" Margin="96,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Mask="099\.099\.099\.099" KeyUp="IpAdressBox_KeyUp"/>
 
-                    <RadioButton x:Name="MinNetworkNumRadio" Content="Minimal number of netwoks" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="322,11,0,0" VerticalAlignment="Top"  Height="20" IsChecked="True"/>
-                    <RadioButton x:Name="MinNetworkSizeRadio" Content="Minimal networks size" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="322,39,0,0" VerticalAlignment="Top"  Height="20" IsChecked="False"/>
+                    <Label Content="Hosts amount:" HorizontalAlignment="Left" Margin="8,33,0,0" VerticalAlignment="Top" Width="86"/>
+                    <xctk:IntegerUpDown x:Name="HostsAmount" HorizontalAlignment="Left" Height="23" Margin="96,37,0,0" VerticalAlignment="Top" Width="99" Minimum="1" Value="1" ValueChanged="HostsAmount_ValueChanged" />
+
+                    <CheckBox x:Name="ForceMask" Content="Force minimal mask" HorizontalAlignment="Left" Margin="209,11,0,0" VerticalAlignment="Top"  Height="20" Checked="ForceMask_Checked"/>
+                    <ComboBox  Margin="209,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="Hostbits" SelectionChanged="Hostbits_SelectionChanged"  />
+
+                    <RadioButton x:Name="MinNetworkNumRadio" Content="Minimal number of netwoks" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="348,11,0,0" VerticalAlignment="Top"  Height="20" IsChecked="True"/>
+                    <RadioButton x:Name="MinNetworkSizeRadio" Content="Minimal networks size" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="348,39,0,0" VerticalAlignment="Top"  Height="20" IsChecked="False"/>
 
                     <CheckBox x:Name="NetworkPercent" Content="Leave" HorizontalAlignment="Left" Margin="522,11,0,0" VerticalAlignment="Top"  Height="20"/>
                     <xctk:IntegerUpDown x:Name="NetworkPercentNum" HorizontalAlignment="Left" Height="23" Margin="578,8,0,0" VerticalAlignment="Top" Width="45" Maximum="99" Minimum="0" Value="0"/>

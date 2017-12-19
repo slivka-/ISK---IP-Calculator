@@ -11,9 +11,11 @@ namespace IP_Calculator.ManualCalculations
     {
         public string ipAddress;
 
-        public string hostBits;//netmask bits length
+        public int hostBits;//netmask bits length
 
         public int hostsNumber;
+
+        public bool forcedMinMask;
 
         public ObservableCollection<ManualDataRow> ManualDataCollection { get; set; }
 
@@ -108,12 +110,21 @@ namespace IP_Calculator.ManualCalculations
         {
             var output = new List<int>();
             int tempHosts = hostsNumber;
-
+            int firstMask = 0;
+            if (forcedMinMask)
+            {
+                firstMask = (int)Math.Pow(2, (32 - hostBits));
+                output.Add(firstMask);
+                tempHosts -= (firstMask - 3) - (int)(firstMask * freeAddr);
+            }
             while (tempHosts > 0)
             {
                 int networkSize = 1;
                 while (networkSize < tempHosts+3)
                     networkSize *= 2;
+                if (forcedMinMask)
+                    while (networkSize > firstMask)
+                        networkSize /= 2;
                 if (networkSize != tempHosts + 3)
                     networkSize /= 2;
 

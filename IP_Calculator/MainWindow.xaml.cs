@@ -72,7 +72,7 @@ namespace IP_Calculator
 
             tableManual.ItemsSource = manualController.ManualDataCollection;
 
-            for (int i = 1; i < 32; i++)
+            for (int i = 1; i < 29; i++)
             {
                 Hostbits.Items.Add(i.ToString());
             }
@@ -97,7 +97,7 @@ namespace IP_Calculator
 
         private void Hostbits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            manualController.hostBits = Hostbits.SelectedItem.ToString();
+            manualController.hostBits = int.Parse(Hostbits.SelectedItem.ToString());
         }
 
         private void HostsAmount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -121,10 +121,12 @@ namespace IP_Calculator
             }
         }
 
-
+        private void ForceMask_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ForceMask.IsChecked != null)
+                manualController.forcedMinMask = (bool)ForceMask.IsChecked;
+        }
 
         #endregion
-
-
     }
 }
