@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IP_Calculator.DataVisualization;
 using IP_Calculator.ManualCalculations;
+using System.Net;
 
 namespace IP_Calculator
 {
@@ -29,21 +30,28 @@ namespace IP_Calculator
             InitializeComponent();
             InitManualCalculations();
             CalculateAutomaticly();
+            AddCombo();
+        }
+
+        private void AddCombo()
+        {
+            combo.Items.Add("Wi-Fi");
+            combo.Items.Add("Ethernet");
         }
 
         private void createTableAutomaticly(IPCalculation ipc)
         {            
             var dt = new ObservableCollection<DataRow>
             {                
-                new DataRow(){Name = "Address",              Data = ipc.getIp()+"",                Binary =ipc.getIp().ToBinaryString() },
+                new DataRow(){Name = "Address",              Data = ipc.getIp().ToString(),                Binary =ipc.getIp().ToBinaryString() },
                 new DataRow(){Name = "Netmask",              Data = ipc.getNetmask()+" = 24",      Binary =ipc.getNetmask().ToBinaryString()},
-                new DataRow(){Name = "Wildcard",             Data = ipc.getWildcard()+ "",         Binary =ipc.getWildcard().ToBinaryString()  },
-                new DataRow(){Name = "Network" ,             Data = ipc.getNetworkAddress()+"/24", Binary =ipc.getNetworkAddress().ToBinaryString()+""  },
-                new DataRow(){Name = "Host Min" ,            Data = ipc.getfirstAddress()+"",      Binary =ipc.getfirstAddress().ToBinaryString()+"" },
-                new DataRow(){Name = "Host Max" ,            Data = ipc.getLastAddress()+"",       Binary =ipc.getLastAddress().ToBinaryString()+""  },
-                new DataRow(){Name = "Broadcast",            Data = ipc.getBroadcastAddress()+"",  Binary =ipc.getBroadcastAddress().ToBinaryString()+"" },
+                new DataRow(){Name = "Wildcard",             Data = ipc.getWildcard().ToString(),         Binary =ipc.getWildcard().ToBinaryString()  },
+                new DataRow(){Name = "Network" ,             Data = ipc.getNetworkAddress()+"/24", Binary =ipc.getNetworkAddress().ToBinaryString().ToString()  },
+                new DataRow(){Name = "Host Min" ,            Data = ipc.getfirstAddress().ToString(),      Binary =ipc.getfirstAddress().ToBinaryString().ToString() },
+                new DataRow(){Name = "Host Max" ,            Data = ipc.getLastAddress().ToString(),       Binary =ipc.getLastAddress().ToBinaryString().ToString()  },
+                new DataRow(){Name = "Broadcast",            Data = ipc.getBroadcastAddress().ToString(),  Binary =ipc.getBroadcastAddress().ToBinaryString().ToString() },
                 //
-                new DataRow(){Name = "Hosts/Net",            Data = ipc.getHostnumber()+"" ,       Binary ="Class C, Private Internet"},
+                new DataRow(){Name = "Hosts/Net",            Data = ipc.getHostnumber().ToString() ,       Binary ="Class B"},
                 //
                 new DataRow(){Name = "Host amount",          Data = "251" ,                        Binary =""},
                 //
@@ -53,15 +61,32 @@ namespace IP_Calculator
          
             };
             table.ItemsSource = dt;
+                        
+        }
 
-            combo.Items.Add("Wi-Fi");
-            combo.Items.Add("Ethernet");
-
+        private string LocalIPAddress()
+        {
+            IPHostEntry host;
+            string localIP = "";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily.ToString() == "InterNetwork")
+                {
+                    localIP = ip.ToString();
+                }
+            }
+            //Console.WriteLine(localIP);
+            return localIP;
         }
 
         private void CalculateAutomaticly()
         {
-            InternetProtocolAddress ip = new InternetProtocolAddress(192, 168, 178, 222);
+            String[] substringsip = LocalIPAddress().Split(new Char[] { '.' });       
+
+            InternetProtocolAddress ip = 
+                new InternetProtocolAddress(byte.Parse(substringsip[0]), byte.Parse(substringsip[1]), byte.Parse(substringsip[2]), byte.Parse(substringsip[3]));
+
             IPCalculation ipc = new IPCalculation(ip, byte.Parse("24"));
             createTableAutomaticly(ipc);
         }
@@ -128,5 +153,15 @@ namespace IP_Calculator
         }
 
         #endregion
+
+        private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CalculateAutomaticly();
+        }
     }
 }
