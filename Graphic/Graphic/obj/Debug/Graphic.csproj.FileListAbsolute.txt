@@ -1,0 +1,10 @@
+C:\Users\Diana\Desktop\Graphic\Graphic\bin\Debug\Graphic.exe
+C:\Users\Diana\Desktop\Graphic\Graphic\bin\Debug\Graphic.pdb
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.csprojResolveAssemblyReference.cache
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.FrmManageObject.resources
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.FrmSchema.resources
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.Properties.Resources.resources
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.csproj.GenerateResource.Cache
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.csproj.CoreCompileInputs.cache
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.exe
+C:\Users\Diana\Desktop\Graphic\Graphic\obj\Debug\Graphic.pdb
