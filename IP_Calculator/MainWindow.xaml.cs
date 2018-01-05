@@ -15,30 +15,25 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IP_Calculator.DataVisualization;
 using IP_Calculator.ManualCalculations;
+using IP_Calculator.AutomaticCalculations;
 using System.Net;
 
 namespace IP_Calculator
 {
     public partial class MainWindow : Window
     {
-        private ObservableCollection<ManualDataRow> manualData = new ObservableCollection<ManualDataRow>();
-
         private ManualController manualController;
+
+        private AutomaticController autoController;
 
         public MainWindow()
         {          
             InitializeComponent();
+            InitAutomaticCalculations();
             InitManualCalculations();
-            CalculateAutomaticly();
-            AddCombo();
         }
 
-        private void AddCombo()
-        {
-            combo.Items.Add("Wi-Fi");
-            combo.Items.Add("Ethernet");
-        }
-
+        /*
         private void createTableAutomaticly(IPCalculation ipc)
         {            
             var dt = new ObservableCollection<DataRow>
@@ -63,6 +58,7 @@ namespace IP_Calculator
             table.ItemsSource = dt;
                         
         }
+        */
 
         private string LocalIPAddress()
         {
@@ -76,19 +72,7 @@ namespace IP_Calculator
                     localIP = ip.ToString();
                 }
             }
-            //Console.WriteLine(localIP);
             return localIP;
-        }
-
-        private void CalculateAutomaticly()
-        {
-            String[] substringsip = LocalIPAddress().Split(new Char[] { '.' });       
-
-            InternetProtocolAddress ip = 
-                new InternetProtocolAddress(byte.Parse(substringsip[0]), byte.Parse(substringsip[1]), byte.Parse(substringsip[2]), byte.Parse(substringsip[3]));
-
-            IPCalculation ipc = new IPCalculation(ip, byte.Parse("24"));
-            createTableAutomaticly(ipc);
         }
 
         private void InitManualCalculations()
@@ -104,7 +88,15 @@ namespace IP_Calculator
             Hostbits.SelectedItem = "24";
         }
 
-        #region Controls event handlers
+        private void InitAutomaticCalculations()
+        {
+            autoController = new AutomaticController();
+
+            interfacesBox.ItemsSource = autoController.connectionsCollection;
+
+        }
+
+        #region Manual controls event handlers
 
         private void CalculateBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -154,14 +146,13 @@ namespace IP_Calculator
 
         #endregion
 
-        private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        #region Automatic controls event handlers
+
+        private void interfacesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            CalculateAutomaticly();
-        }
+        #endregion
     }
 }
