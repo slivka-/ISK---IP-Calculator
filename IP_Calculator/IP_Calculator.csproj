@@ -95,9 +95,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AutomaticCalculations\AutomaticController.cs" />
-    <Compile Include="AutomaticCalculations\ConnectionInterfaceInfo.cs" />
     <Compile Include="DataVisualization\ManualDataRow.cs" />
+    <Compile Include="DrawNet\Draw.cs" />
     <Compile Include="ManualCalculations\Binary.cs" />
     <Compile Include="DataVisualization\DataRow.cs" />
     <Compile Include="ManualCalculations\InternetProtocolAddress.cs" />
