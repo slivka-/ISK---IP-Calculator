@@ -23,18 +23,17 @@
         <TabControl HorizontalAlignment="Stretch" Height="348" Margin="35,33,35,0" VerticalAlignment="Top" SelectedIndex="0">
             <TabItem Header="Automatic" Margin="-2,0" Height="36" VerticalAlignment="Bottom">
                 <Grid Background="#FFE5E5E5" Margin="8,10,12,10" >
-                    <Label Content="Choose conection" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Top" />
-                    <ComboBox x:Name="interfacesBox" HorizontalAlignment="Left" Margin="247,0,0,258" VerticalAlignment="Bottom" Width="120" SelectionChanged="interfacesBox_SelectionChanged">
+                    <Label Content="Choose conection" HorizontalAlignment="Left" Margin="154,0,0,0" VerticalAlignment="Top" />
+                    <ComboBox x:Name="interfacesBox" HorizontalAlignment="Left" Margin="262,0,0,259" VerticalAlignment="Bottom" Width="486" SelectionChanged="interfacesBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <ListBoxItem Content="{Binding Hostname}" ToolTip="{Binding AllInfo}"/>
+                                <ListBoxItem Width="486" Content="{Binding Hostname}" ToolTip="{Binding AllInfo}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <Button x:Name="autoCalcBtn" Content="Calculate" HorizontalAlignment="Left" Margin="753,5,0,0" VerticalAlignment="Top" Width="75" Click="autoCalcBtn_Click"/>
 
                     <DataGrid x:Name="table" HorizontalAlignment="Left" Height="230" Margin="158,30,0,0" VerticalAlignment="Top" Width="670" CanUserDeleteRows="True" HeadersVisibility="None" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Hidden" />
-                    
-                    
                 </Grid>
             </TabItem>
             <TabItem Header="Manual" Margin="-2,0,-2,-1" Height="36" VerticalAlignment="Bottom">

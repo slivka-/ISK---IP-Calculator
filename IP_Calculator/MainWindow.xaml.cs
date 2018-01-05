@@ -150,7 +150,12 @@ namespace IP_Calculator
 
         private void interfacesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            autoController.selectedConnection = (ConnectionInterfaceInfo)interfacesBox.SelectedItem;
+        }
 
+        private void autoCalcBtn_Click(object sender, RoutedEventArgs e)
+        {
+            autoController.CalculateOptimal();
         }
 
         #endregion
