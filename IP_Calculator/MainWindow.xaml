@@ -20,21 +20,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Name="mainLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,50,0,0" Width="150" Height="10"/>
-        <TabControl HorizontalAlignment="Stretch" Height="348" Margin="35,33,35,0" VerticalAlignment="Top" SelectedIndex="0">
+        <TabControl HorizontalAlignment="Stretch" Height="348" Margin="35,33,35,0" VerticalAlignment="Top" SelectedIndex="1">
             <TabItem Header="Automatic" Margin="-2,0" Height="36" VerticalAlignment="Bottom">
-                <Grid Background="#FFE5E5E5" Margin="8,10,12,10" >
-                    <Label Content="Choose conection" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Top" />
-                    <ComboBox x:Name="interfacesBox" HorizontalAlignment="Left" Margin="247,0,0,258" VerticalAlignment="Bottom" Width="120" SelectionChanged="interfacesBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <ListBoxItem Content="{Binding Hostname}" ToolTip="{Binding AllInfo}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-
-                    <DataGrid x:Name="table" HorizontalAlignment="Left" Height="230" Margin="158,30,0,0" VerticalAlignment="Top" Width="670" CanUserDeleteRows="True" HeadersVisibility="None" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Hidden" />
-                    
-                    
+                <Grid  Name="nuevo" Background="#FFE5E5E5" Margin="8,10,12,10" >
+                    <DataGrid x:Name="table" HorizontalAlignment="Left" Height="230" Margin="158,30,0,0" VerticalAlignment="Top" Width="670" CanUserDeleteRows="True" HeadersVisibility="None" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Hidden" SelectionChanged="table_SelectionChanged" />
+                    <ComboBox x:Name="combo" HorizontalAlignment="Left" Margin="700,0,0,257" VerticalAlignment="Bottom" Width="120" SelectionChanged="combo_SelectionChanged" SelectedValue="Wi-Fi" />
+                    <Label Content="&#x9;Choose conection" HorizontalAlignment="Left" Margin="542,-1,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Manual" Margin="-2,0,-2,-1" Height="36" VerticalAlignment="Bottom">
@@ -72,7 +63,7 @@
                     <Label Content="Hosts amount:" HorizontalAlignment="Left" Margin="8,33,0,0" VerticalAlignment="Top" Width="86"/>
                     <xctk:IntegerUpDown x:Name="HostsAmount" HorizontalAlignment="Left" Height="23" Margin="96,37,0,0" VerticalAlignment="Top" Width="99" Minimum="1" Value="1" ValueChanged="HostsAmount_ValueChanged" />
 
-                    <CheckBox x:Name="ForceMask" Content="Force minimal mask" HorizontalAlignment="Left" Margin="209,11,0,0" VerticalAlignment="Top"  Height="20" Checked="ForceMask_Checked" Unchecked="ForceMask_Checked"/>
+                    <CheckBox x:Name="ForceMask" Content="Force minimal mask" HorizontalAlignment="Left" Margin="209,11,0,0" VerticalAlignment="Top"  Height="20" Checked="ForceMask_Checked"/>
                     <ComboBox  Margin="209,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="Hostbits" SelectionChanged="Hostbits_SelectionChanged"  />
 
                     <RadioButton x:Name="MinNetworkNumRadio" Content="Minimal number of netwoks" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="348,11,0,0" VerticalAlignment="Top"  Height="20" IsChecked="True"/>
@@ -87,6 +78,7 @@
                     <Label Content="networks" HorizontalAlignment="Left" Margin="662,34,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
 
                     <Button x:Name="CalculateBtn" Content="Calculate" HorizontalAlignment="Left" Margin="898,39,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
+                    <Button x:Name="DrawNetBtn" Content="Draw Net" HorizontalAlignment="Left" Margin="898,7,0,0" VerticalAlignment="Top" Width="75" Click="DrawNetBtn_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

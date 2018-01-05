@@ -15,25 +15,30 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IP_Calculator.DataVisualization;
 using IP_Calculator.ManualCalculations;
-using IP_Calculator.AutomaticCalculations;
 using System.Net;
 
 namespace IP_Calculator
 {
     public partial class MainWindow : Window
     {
-        private ManualController manualController;
+        private ObservableCollection<ManualDataRow> manualData = new ObservableCollection<ManualDataRow>();
 
-        private AutomaticController autoController;
+        private ManualController manualController;
 
         public MainWindow()
         {          
             InitializeComponent();
-            InitAutomaticCalculations();
             InitManualCalculations();
+            CalculateAutomaticly();
+            AddCombo();
         }
 
-        /*
+        private void AddCombo()
+        {
+            combo.Items.Add("Wi-Fi");
+            combo.Items.Add("Ethernet");
+        }
+
         private void createTableAutomaticly(IPCalculation ipc)
         {            
             var dt = new ObservableCollection<DataRow>
@@ -58,7 +63,6 @@ namespace IP_Calculator
             table.ItemsSource = dt;
                         
         }
-        */
 
         private string LocalIPAddress()
         {
@@ -72,7 +76,19 @@ namespace IP_Calculator
                     localIP = ip.ToString();
                 }
             }
+            //Console.WriteLine(localIP);
             return localIP;
+        }
+
+        private void CalculateAutomaticly()
+        {
+            String[] substringsip = LocalIPAddress().Split(new Char[] { '.' });       
+
+            InternetProtocolAddress ip = 
+                new InternetProtocolAddress(byte.Parse(substringsip[0]), byte.Parse(substringsip[1]), byte.Parse(substringsip[2]), byte.Parse(substringsip[3]));
+
+            IPCalculation ipc = new IPCalculation(ip, byte.Parse("24"));
+            createTableAutomaticly(ipc);
         }
 
         private void InitManualCalculations()
@@ -88,15 +104,7 @@ namespace IP_Calculator
             Hostbits.SelectedItem = "24";
         }
 
-        private void InitAutomaticCalculations()
-        {
-            autoController = new AutomaticController();
-
-            interfacesBox.ItemsSource = autoController.connectionsCollection;
-
-        }
-
-        #region Manual controls event handlers
+        #region Controls event handlers
 
         private void CalculateBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -146,13 +154,46 @@ namespace IP_Calculator
 
         #endregion
 
-        #region Automatic controls event handlers
-
-        private void interfacesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void table_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        #endregion
+        private void combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CalculateAutomaticly();
+        }
+
+        private void DrawNetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ManualDataRow> a = manualController.ManualDataCollection;
+                       
+            string text2 = "";
+
+            if (a.Count <= 4)
+            {
+                text2 = ManualCalculations.Draw.createFile(a);
+            }
+            else
+            {
+                text2 = ManualCalculations.Draw.createFile2(a);
+            }
+            String text = text2+ "end network file.";
+            System.IO.File.WriteAllText(@"..\..\WriteText.txt", text);
+
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.EnableRaisingEvents = false;
+            proc.StartInfo.FileName = @"..\..\Graphic\Graphic\bin\Debug\Graphic.exe";
+            proc.StartInfo.Arguments = @"..\..\WriteText.txt"; 
+            proc.Start();
+
+        }
+
+        
+
+            
+
+
+
     }
 }
