@@ -24,16 +24,32 @@
             <TabItem Header="Automatic" Margin="-2,0" Height="36" VerticalAlignment="Bottom">
                 <Grid Background="#FFE5E5E5" Margin="8,10,12,10" >
                     <Label Content="Choose conection" HorizontalAlignment="Left" Margin="154,0,0,0" VerticalAlignment="Top" />
-                    <ComboBox x:Name="interfacesBox" HorizontalAlignment="Left" Margin="262,0,0,259" VerticalAlignment="Bottom" Width="486" SelectionChanged="interfacesBox_SelectionChanged">
+                    <ComboBox x:Name="interfacesBox" HorizontalAlignment="Left" Margin="262,0,0,259" VerticalAlignment="Bottom" Width="421" SelectionChanged="interfacesBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <ListBoxItem Width="486" Content="{Binding Hostname}" ToolTip="{Binding AllInfo}"/>
+                                
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <xctk:IntegerUpDown x:Name="pingDuration" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Minimum="50" Maximum="1500" Value="100" Margin="688,5,0,0"/>
                     <Button x:Name="autoCalcBtn" Content="Calculate" HorizontalAlignment="Left" Margin="753,5,0,0" VerticalAlignment="Top" Width="75" Click="autoCalcBtn_Click"/>
 
-                    <DataGrid x:Name="table" HorizontalAlignment="Left" Height="230" Margin="158,30,0,0" VerticalAlignment="Top" Width="670" CanUserDeleteRows="True" HeadersVisibility="None" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Hidden" />
+                    <Label Content="Discovered hosts" HorizontalAlignment="Left" Margin="182,30,0,0" VerticalAlignment="Top" />
+                    <DataGrid x:Name="autoTable" HorizontalAlignment="Left" Height="192" Margin="158,58,0,0" VerticalAlignment="Top" Width="167" CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="Column"  VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Address" Binding="{Binding SwitchableIpAddr}"/>
+                            <DataGridTemplateColumn Header="Dec/Bin" Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Tag="{Binding Hostname}" Click="AutoShowBtn_Click">Switch</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <ProgressBar x:Name="sweepProgressBar" HorizontalAlignment="Left" Height="19" Margin="159,255,0,0" VerticalAlignment="Top" Width="669"/>
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Manual" Margin="-2,0,-2,-1" Height="36" VerticalAlignment="Bottom">

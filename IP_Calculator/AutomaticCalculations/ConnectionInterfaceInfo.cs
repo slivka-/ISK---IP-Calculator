@@ -9,11 +9,28 @@ namespace IP_Calculator.AutomaticCalculations
 {
     class ConnectionInterfaceInfo
     {
+        public bool ShowBinary { get; set; }
         public string Hostname { get; set; }
         public IPAddress IpAddress { get; set; }
         public IPAddress SubnetMask { get; set; }
         public IPAddress DefGateway { get; set; }
-        public IPAddress NetworkAddress { get; set; }
+        public IPAddress NetworkAddress
+        {
+            get
+            {
+                return GetNetworkAddress();
+            }
+        }
+        public string SwitchableIpAddr
+        {
+            get
+            {
+                if (!ShowBinary)
+                    return IpAddress.ToString();
+                else
+                    return getBinaryIp();
+            }
+        }
 
         public string AllInfo
         {
@@ -51,6 +68,11 @@ namespace IP_Calculator.AutomaticCalculations
                     if (c.Equals('1'))
                         output++;
             return output;
+        }
+
+        private string getBinaryIp()
+        {
+            return string.Join(".",IpAddress.GetAddressBytes().Select(s => Convert.ToString(s, 2).PadLeft(8, '0')));
         }
     }
 }

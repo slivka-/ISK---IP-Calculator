@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace IP_Calculator.AutomaticCalculations
 {
@@ -13,17 +16,21 @@ namespace IP_Calculator.AutomaticCalculations
     {
         private object lockObj = new object();
 
-        private List<ConnectionInterfaceInfo> discoveredHosts;
+        public ObservableCollection<ConnectionInterfaceInfo> discoveredHosts;
 
         public ObservableCollection<ConnectionInterfaceInfo> connectionsCollection;
 
         public ConnectionInterfaceInfo selectedConnection;
 
-        private int completedPings;
+        private List<int> completedPings;
 
-        public AutomaticController()
+        private ProgressBar sweepProgressBar;
+
+        public AutomaticController(ProgressBar progressBar)
         {
             connectionsCollection = new ObservableCollection<ConnectionInterfaceInfo>();
+            discoveredHosts = new ObservableCollection<ConnectionInterfaceInfo>();
+            sweepProgressBar = progressBar;
             ScanForConnections();
         }
 
@@ -54,9 +61,9 @@ namespace IP_Calculator.AutomaticCalculations
             }
         }
 
-        private void ScanNetworkForHosts()
+        private void ScanNetworkForHosts(int pingDuration, DataGrid dataGrid)
         {
-            completedPings = 0;
+            
 
             var toScanPerOctet = selectedConnection.SubnetMask
                                                  .GetAddressBytes()
@@ -67,6 +74,13 @@ namespace IP_Calculator.AutomaticCalculations
 
             var octets = selectedConnection.GetNetworkAddress().GetAddressBytes().Select(s => (int)s).ToArray();
 
+            completedPings = new List<int>();
+            for (int x = 0; x < toScanPerOctet.Sum(); x++)
+                completedPings.Add(x);
+
+            Task.Factory.StartNew(() => WaitForSweepComplete(toScanPerOctet.Sum(), dataGrid));
+
+            int counter = 0;
             for (int i = octets[0]; i <= octets[0] + toScanPerOctet[0]; i++)
             {
                 for (int j = octets[1]; j <= octets[1] + toScanPerOctet[1]; j++)
@@ -77,20 +91,20 @@ namespace IP_Calculator.AutomaticCalculations
                         {
                             string ip = string.Format("{0}.{1}.{2}.{3}", i, j, k, l);
                             Ping p = new Ping();
-                            p.PingCompleted += new PingCompletedEventHandler(p_PingCompleted);
-                            p.SendAsync(ip, 100, ip);
+                            p.PingCompleted += new PingCompletedEventHandler((s, e) => p_PingCompleted(s,e,counter++));
+                            p.SendAsync(ip, pingDuration, ip);
                         }
                     }
                 }
             }
         }
 
-        private void p_PingCompleted(object sender, PingCompletedEventArgs e)
+        private void p_PingCompleted(object sender, PingCompletedEventArgs e, int threadNum)
         {
             lock (lockObj)
             {
-                completedPings++;
                 string ip = (string)e.UserState;
+                
                 if (e.Reply != null && e.Reply.Status == IPStatus.Success)
                 {
                     //TODO: write successfull pings to array, calculate network size
@@ -100,24 +114,48 @@ namespace IP_Calculator.AutomaticCalculations
                     byte[] ipBytes = ip.Split('.').Select(s => byte.Parse(s)).ToArray();
                     discoveredHosts.Add(new ConnectionInterfaceInfo()
                     {
-                        Hostname = "Host nr "+completedPings,
+                        Hostname = "Discovered host " + threadNum,
                         IpAddress = new System.Net.IPAddress(ipBytes),
                         SubnetMask = selectedConnection.SubnetMask,
-                        DefGateway = selectedConnection.DefGateway
+                        DefGateway = selectedConnection.DefGateway,
+                        ShowBinary = false
                     });
                 }
+                completedPings.Remove(threadNum);
             }
         }
-    
-        public void CalculateOptimal()
+
+        private void WaitForSweepComplete(int pingsNum, DataGrid dataGrid)
         {
-            discoveredHosts = new List<ConnectionInterfaceInfo>();
-            ScanNetworkForHosts();
+            sweepProgressBar.Dispatcher.Invoke(delegate {
+                sweepProgressBar.Minimum = 0;
+                sweepProgressBar.Maximum = completedPings.Count;
+            });
+            while (completedPings.Count > 0)
+            {
+                sweepProgressBar.Dispatcher.Invoke(delegate {
+                    sweepProgressBar.Value = pingsNum - completedPings.Count();
+                });
+                Thread.Sleep(5);
+            }
+            sweepProgressBar.Dispatcher.Invoke(delegate {
+                sweepProgressBar.Value = pingsNum - completedPings.Count();
+            });
+            sweepProgressBar.Dispatcher.Invoke(delegate
+            {
+                dataGrid.Items.Refresh();
+            });
+            Console.WriteLine("Sweep complete");
+        }
+    
+        public void CalculateOptimal(int pingDuration, DataGrid dataGrid)
+        {
+            discoveredHosts.Clear();
+            
 
             if (selectedConnection != null)
             {
-                Console.WriteLine(selectedConnection.ToString());
-                Console.WriteLine(selectedConnection.GetMaskSize());
+                ScanNetworkForHosts(pingDuration, dataGrid);
             }
         }
 

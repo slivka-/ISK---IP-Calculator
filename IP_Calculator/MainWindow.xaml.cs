@@ -90,9 +90,11 @@ namespace IP_Calculator
 
         private void InitAutomaticCalculations()
         {
-            autoController = new AutomaticController();
+            autoController = new AutomaticController(sweepProgressBar);
 
             interfacesBox.ItemsSource = autoController.connectionsCollection;
+
+            autoTable.ItemsSource = autoController.discoveredHosts;
 
         }
 
@@ -155,7 +157,19 @@ namespace IP_Calculator
 
         private void autoCalcBtn_Click(object sender, RoutedEventArgs e)
         {
-            autoController.CalculateOptimal();
+            
+            autoController.CalculateOptimal((int)pingDuration.Value,autoTable);
+        }
+
+        private void AutoShowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).Tag != null)
+            {
+                string rowToSwitch = (string)((Button)sender).Tag;
+                var row = autoController.discoveredHosts.Where(w => w.Hostname == rowToSwitch).Single();
+                row.ShowBinary = !row.ShowBinary;
+                autoTable.Items.Refresh();
+            }
         }
 
         #endregion
