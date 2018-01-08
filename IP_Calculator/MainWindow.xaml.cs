@@ -33,33 +33,6 @@ namespace IP_Calculator
             InitManualCalculations();
         }
 
-        /*
-        private void createTableAutomaticly(IPCalculation ipc)
-        {            
-            var dt = new ObservableCollection<DataRow>
-            {                
-                new DataRow(){Name = "Address",              Data = ipc.getIp().ToString(),                Binary =ipc.getIp().ToBinaryString() },
-                new DataRow(){Name = "Netmask",              Data = ipc.getNetmask()+" = 24",      Binary =ipc.getNetmask().ToBinaryString()},
-                new DataRow(){Name = "Wildcard",             Data = ipc.getWildcard().ToString(),         Binary =ipc.getWildcard().ToBinaryString()  },
-                new DataRow(){Name = "Network" ,             Data = ipc.getNetworkAddress()+"/24", Binary =ipc.getNetworkAddress().ToBinaryString().ToString()  },
-                new DataRow(){Name = "Host Min" ,            Data = ipc.getfirstAddress().ToString(),      Binary =ipc.getfirstAddress().ToBinaryString().ToString() },
-                new DataRow(){Name = "Host Max" ,            Data = ipc.getLastAddress().ToString(),       Binary =ipc.getLastAddress().ToBinaryString().ToString()  },
-                new DataRow(){Name = "Broadcast",            Data = ipc.getBroadcastAddress().ToString(),  Binary =ipc.getBroadcastAddress().ToBinaryString().ToString() },
-                //
-                new DataRow(){Name = "Hosts/Net",            Data = ipc.getHostnumber().ToString() ,       Binary ="Class B"},
-                //
-                new DataRow(){Name = "Host amount",          Data = "251" ,                        Binary =""},
-                //
-                new DataRow(){Name = "Amount of free host",  Data = "3" ,                          Binary =((5.88)).ToString()+"%"},
-                new DataRow(){Name = "Host Address Size",    Data = ipc.getHostBits() + " Bits" ,  Binary =""},
-                new DataRow(){Name = "Network Address Size", Data = ipc.getNetworkBits() + " Bits",Binary =""}
-         
-            };
-            table.ItemsSource = dt;
-                        
-        }
-        */
-
         private string LocalIPAddress()
         {
             IPHostEntry host;
@@ -95,6 +68,8 @@ namespace IP_Calculator
             interfacesBox.ItemsSource = autoController.connectionsCollection;
 
             autoTable.ItemsSource = autoController.discoveredHosts;
+
+            autoResultTable.ItemsSource = autoController.resultCollection;
 
         }
 
@@ -158,7 +133,7 @@ namespace IP_Calculator
         private void autoCalcBtn_Click(object sender, RoutedEventArgs e)
         {
             
-            autoController.CalculateOptimal((int)pingDuration.Value,autoTable);
+            autoController.CalculateOptimal((int)pingDuration.Value,autoTable,autoResultTable);
         }
 
         private void AutoShowBtn_Click(object sender, RoutedEventArgs e)
@@ -168,7 +143,7 @@ namespace IP_Calculator
                 string rowToSwitch = (string)((Button)sender).Tag;
                 var row = autoController.discoveredHosts.Where(w => w.Hostname == rowToSwitch).Single();
                 row.ShowBinary = !row.ShowBinary;
-                autoTable.Items.Refresh();
+                autoTable.Items.Refresh();                
             }
         }
 

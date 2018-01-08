@@ -99,7 +99,7 @@
     <Compile Include="AutomaticCalculations\ConnectionInterfaceInfo.cs" />
     <Compile Include="DataVisualization\ManualDataRow.cs" />
     <Compile Include="ManualCalculations\Binary.cs" />
-    <Compile Include="DataVisualization\DataRow.cs" />
+    <Compile Include="DataVisualization\AutomaticDataRow.cs" />
     <Compile Include="ManualCalculations\InternetProtocolAddress.cs" />
     <Compile Include="ManualCalculations\IPCalculation.cs" />
     <Compile Include="MainWindow.xaml.cs">
