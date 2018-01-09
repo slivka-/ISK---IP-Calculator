@@ -133,7 +133,7 @@ namespace IP_Calculator
         private void autoCalcBtn_Click(object sender, RoutedEventArgs e)
         {
             
-            autoController.CalculateOptimal((int)pingDuration.Value,autoTable,autoResultTable);
+            autoController.CalculateOptimal((int)pingDuration.Value,autoTable,autoResultTable,(bool)MinSizes.IsChecked);
         }
 
         private void AutoShowBtn_Click(object sender, RoutedEventArgs e)
@@ -144,6 +144,17 @@ namespace IP_Calculator
                 var row = autoController.discoveredHosts.Where(w => w.Hostname == rowToSwitch).Single();
                 row.ShowBinary = !row.ShowBinary;
                 autoTable.Items.Refresh();                
+            }
+        }
+
+        private void AutoResultShowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).Tag != null)
+            {
+                int rowToSwitch = (int)((Button)sender).Tag;
+                var row = autoController.resultCollection.Where(w => w.Id == rowToSwitch).Single();
+                row.ShowBinary = !row.ShowBinary;
+                autoResultTable.Items.Refresh();
             }
         }
 

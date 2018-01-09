@@ -67,7 +67,7 @@ namespace IP_Calculator.AutomaticCalculations
             }
         }
 
-        private void ScanNetworkForHosts(int pingDuration, DataGrid dataGrid, DataGrid resultGrid)
+        private void ScanNetworkForHosts(int pingDuration, DataGrid dataGrid, DataGrid resultGrid, bool minSize)
         {
             
 
@@ -84,7 +84,7 @@ namespace IP_Calculator.AutomaticCalculations
             for (int x = 0; x < toScanPerOctet.Sum(); x++)
                 completedPings.Add(x);
 
-            Task.Factory.StartNew(() => WaitForSweepComplete(toScanPerOctet.Sum(), dataGrid, resultGrid));
+            Task.Factory.StartNew(() => WaitForSweepComplete(toScanPerOctet.Sum(), dataGrid, resultGrid, minSize));
 
             int counter = 0;
             for (int i = octets[0]; i <= octets[0] + toScanPerOctet[0]; i++)
@@ -130,7 +130,7 @@ namespace IP_Calculator.AutomaticCalculations
             }
         }
 
-        private void WaitForSweepComplete(int pingsNum, DataGrid dataGrid, DataGrid resultGrid)
+        private void WaitForSweepComplete(int pingsNum, DataGrid dataGrid, DataGrid resultGrid, bool minSize)
         {
             sweepProgressBar.Dispatcher.Invoke(delegate {
                 sweepProgressBar.Minimum = 0;
@@ -150,26 +150,26 @@ namespace IP_Calculator.AutomaticCalculations
             {
                 dataGrid.Items.Refresh();
             });
-            CalculateNetworks(resultGrid);
+            CalculateNetworks(minSize,resultGrid);
             Console.WriteLine("Sweep complete");
         }
 
-        private void CalculateNetworks(DataGrid resultGrid)
+        private void CalculateNetworks(bool minSize, DataGrid resultGrid)
         {
             
-            if (true)
+            if (!minSize)
             {
                 InternalAddressRow addrRow = CalculateMinimalNetworksNum();
                 IPCalculation ipc = new IPCalculation(addrRow.Ip, addrRow.Netmask);
                 Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => AddAutomaticRow(ipc, addrRow.HostsNumber)));
             }
-            else if (false)
+            else if (minSize)
             {
                 var addrRows = CalculateMinimalNetworksSize();
                 foreach (var row in addrRows)
                 {
                     IPCalculation ipc = new IPCalculation(row.Ip, row.Netmask);
-                    AddAutomaticRow(ipc, row.HostsNumber);
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => AddAutomaticRow(ipc, row.HostsNumber)));
                 }
             }
         }
@@ -250,10 +250,7 @@ namespace IP_Calculator.AutomaticCalculations
                     networkSize /= 2;
 
                 output.Add(networkSize);
-                if (networkSize != tempHosts + 3)
-                    tempHosts -= (networkSize - 3) - (int)(networkSize);
-                else
-                    tempHosts -= (networkSize - 3);
+                tempHosts -= (networkSize - 3);
             }
             return output;
         }
@@ -296,13 +293,13 @@ namespace IP_Calculator.AutomaticCalculations
             );
         }
 
-        public void CalculateOptimal(int pingDuration, DataGrid dataGrid, DataGrid resultGrid)
+        public void CalculateOptimal(int pingDuration, DataGrid dataGrid, DataGrid resultGrid, bool minSize)
         {
             discoveredHosts.Clear();
             resultCollection.Clear();
             if (selectedConnection != null)
             {
-                ScanNetworkForHosts(pingDuration, dataGrid, resultGrid);
+                ScanNetworkForHosts(pingDuration, dataGrid, resultGrid, minSize);
             }
         }
 

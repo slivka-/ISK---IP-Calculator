@@ -104,6 +104,14 @@ namespace IP_Calculator.DataVisualization
         public string BinaryBroadcast { get; set; }
         public string BinaryWildcard { get; set; }
 
+        public string OccHosts
+        {
+            get
+            {
+                return (int.Parse(FreeHosts) - int.Parse(HostsNum)).ToString();
+            }
+        }
+
         private string ipAddress;
         private string netMask;
         private string hostMin;
