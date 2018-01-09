@@ -179,12 +179,12 @@ namespace IP_Calculator
                 text2 = ManualCalculations.Draw.createFile2(a);
             }
             String text = text2+ "end network file.";
-            System.IO.File.WriteAllText(@"..\..\WriteText.txt", text);
+            System.IO.File.WriteAllText(@"..\..\..\WriteText.txt", text);
 
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
             proc.EnableRaisingEvents = false;
-            proc.StartInfo.FileName = @"..\..\Graphic\Graphic\bin\Debug\Graphic.exe";
-            proc.StartInfo.Arguments = @"..\..\WriteText.txt"; 
+            proc.StartInfo.FileName = @"..\..\..\Graphic\Graphic\bin\Debug\Graphic.exe";
+            proc.StartInfo.Arguments = @"..\..\..\WriteText.txt"; 
             proc.Start();
 
         }

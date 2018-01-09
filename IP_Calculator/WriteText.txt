@@ -1,0 +1,411 @@
+object=Router;
+type=Router;
+x1=720;
+y1=80;
+lnk1=;
+x2=800;
+y2=160;
+lnk2=;
+end object.
+
+object=Switch_0;
+type=Receiver;
+x1=80;
+y1=284;
+lnk1=;
+x2=200;
+y2=314;
+lnk2=;
+end object.
+
+object=1.2;
+type=Emitter;
+x1=30;
+y1=467;
+lnk1=;
+x2=110;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.1.1/24;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_0;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_0;
+x2=628;
+y2=369;
+lnk2=1.2;
+end object.
+
+object=1.254;
+type=Emitter;
+x1=120;
+y1=467;
+lnk1=;
+x2=200;
+y2=547;
+lnk2 =;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_0;
+x2=628;
+y2=369;
+lnk2=1.254;
+end object.
+
+object=Switch_1;
+type=Receiver;
+x1=240;
+y1=314;
+lnk1=;
+x2=360;
+y2=344;
+lnk2=;
+end object.
+
+object=2.2;
+type=Emitter;
+x1=190;
+y1=467;
+lnk1=;
+x2=270;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.2.1/25;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_1;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_1;
+x2=628;
+y2=369;
+lnk2=2.2;
+end object.
+
+object=2.126;
+type=Emitter;
+x1=270;
+y1=467;
+lnk1=;
+x2=350;
+y2=547;
+lnk2 =;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_1;
+x2=628;
+y2=369;
+lnk2=2.126;
+end object.
+
+object=Switch_2;
+type=Receiver;
+x1=400;
+y1=284;
+lnk1=;
+x2=520;
+y2=314;
+lnk2=;
+end object.
+
+object=2.226;
+type=Emitter;
+x1=350;
+y1=467;
+lnk1=;
+x2=430;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.2.225/28;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_2;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_2;
+x2=628;
+y2=369;
+lnk2=2.226;
+end object.
+
+object=2.238;
+type=Emitter;
+x1=430;
+y1=467;
+lnk1=;
+x2=510;
+y2=547;
+lnk2 =;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_2;
+x2=628;
+y2=369;
+lnk2=2.238;
+end object.
+
+object=Switch_3;
+type=Receiver;
+x1=560;
+y1=314;
+lnk1=;
+x2=680;
+y2=344;
+lnk2=;
+end object.
+
+object=2.242;
+type=Emitter;
+x1=510;
+y1=467;
+lnk1=;
+x2=590;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.2.241/29;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_3;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_3;
+x2=628;
+y2=369;
+lnk2=2.242;
+end object.
+
+object=2.246;
+type=Emitter;
+x1=590;
+y1=467;
+lnk1=;
+x2=670;
+y2=547;
+lnk2 =;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_3;
+x2=628;
+y2=369;
+lnk2=2.246;
+end object.
+
+object=Switch_4;
+type=Receiver;
+x1=720;
+y1=284;
+lnk1=;
+x2=840;
+y2=314;
+lnk2=;
+end object.
+
+object=2.254;
+type=Emitter;
+x1=670;
+y1=467;
+lnk1=;
+x2=750;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.2.253/30;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_4;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_4;
+x2=628;
+y2=369;
+lnk2=2.254;
+end object.
+
+object=Switch_5;
+type=Receiver;
+x1=880;
+y1=314;
+lnk1=;
+x2=1000;
+y2=344;
+lnk2=;
+end object.
+
+object=3.2;
+type=Emitter;
+x1=830;
+y1=467;
+lnk1=;
+x2=910;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.3.1/30;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_5;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_5;
+x2=628;
+y2=369;
+lnk2=3.2;
+end object.
+
+object=Switch_6;
+type=Receiver;
+x1=1040;
+y1=284;
+lnk1=;
+x2=1160;
+y2=314;
+lnk2=;
+end object.
+
+object=3.6;
+type=Emitter;
+x1=990;
+y1=467;
+lnk1=;
+x2=1070;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.3.5/30;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_6;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_6;
+x2=628;
+y2=369;
+lnk2=3.6;
+end object.
+
+object=Switch_7;
+type=Receiver;
+x1=1200;
+y1=314;
+lnk1=;
+x2=1320;
+y2=344;
+lnk2=;
+end object.
+
+object=3.10;
+type=Emitter;
+x1=1150;
+y1=467;
+lnk1=;
+x2=1230;
+y2=547;
+lnk2=;
+end object.
+
+object=192.168.3.9/30;
+type=Line;
+x1=932;
+y1=279;
+lnk1=Router;
+x2=490;
+y2=205;
+lnk2=Switch_7;
+end object.
+
+object=;
+type=Line;
+x1=436;
+y1=349;
+lnk1=Switch_7;
+x2=628;
+y2=369;
+lnk2=3.10;
+end object.
+
+end network file.
