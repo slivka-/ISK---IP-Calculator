@@ -125,6 +125,7 @@
                     <Label Content="networks" HorizontalAlignment="Left" Margin="662,34,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
 
                     <Button x:Name="CalculateBtn" Content="Calculate" HorizontalAlignment="Left" Margin="898,39,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
+                    <Button x:Name="DrawNetBtn" Content="Draw Net" HorizontalAlignment="Left" Margin="898,7,0,0" VerticalAlignment="Top" Width="75" Click="DrawNetBtn_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

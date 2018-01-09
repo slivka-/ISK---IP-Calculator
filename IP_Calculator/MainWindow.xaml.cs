@@ -121,6 +121,31 @@ namespace IP_Calculator
                 manualController.forcedMinMask = (bool)ForceMask.IsChecked;
         }
 
+        private void DrawNetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<ManualDataRow> a = manualController.ManualDataCollection;
+
+            string text2 = "";
+
+            if (a.Count <= 4)
+            {
+                text2 = ManualCalculations.Draw.createFile(a);
+            }
+            else
+            {
+                text2 = ManualCalculations.Draw.createFile2(a);
+            }
+            String text = text2 + "end network file.";
+            System.IO.File.WriteAllText(@"..\..\..\WriteText.txt", text);
+
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.EnableRaisingEvents = false;
+            proc.StartInfo.FileName = @"..\..\..\Graphic\Graphic\bin\Debug\Graphic.exe";
+            proc.StartInfo.Arguments = @"..\..\..\WriteText.txt";
+            proc.Start();
+
+        }
+
         #endregion
 
         #region Automatic controls event handlers
