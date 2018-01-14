@@ -90,9 +90,12 @@ namespace IP_Calculator.ManualCalculations
             return hostnumber;
         }
 
-        public byte getHostBits()
+        public int getHostBits
         {
-            return (byte)(32 - cidr);
+            get
+            {
+                return (32 - cidr);
+            }
         }
 
         public byte getNetworkBits()

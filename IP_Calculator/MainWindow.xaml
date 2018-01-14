@@ -57,10 +57,9 @@
                             <DataGridTextColumn Header="Maximal host" Binding="{Binding HostMax}" Width="Auto"/>
                             <DataGridTextColumn Header="Broadcast Adress" Binding="{Binding Broadcast}" Width="Auto"/>
                             <DataGridTextColumn Header="Wildcard" Binding="{Binding Wildcard}" Width="Auto"/>
-                            <DataGridTextColumn Header="Max hosts per network" Binding="{Binding FreeHosts }" Width="Auto"/>
-                            <DataGridTextColumn Header="Occupied hosts" Binding="{Binding OccHosts}" Width="Auto"/>
-                            <DataGridTextColumn Header="Free hosts" Binding="{Binding HostsNum}" Width="Auto"/>
-                            <DataGridTextColumn Header="Host adress size" Binding="{Binding HostAddressSize}" Width="Auto"/>
+                            <DataGridTextColumn Header="Max hosts per network" Binding="{Binding HostAddressSize }" Width="Auto"/>
+                            <DataGridTextColumn Header="Occupied hosts" Binding="{Binding OccHosts }" Width="Auto"/>
+                            <DataGridTextColumn Header="Free hosts" Binding="{Binding FreeHosts}" Width="Auto"/>
                             <DataGridTextColumn Header="Network adress size" Binding="{Binding NetAddressSize}" Width="Auto"/>
                             <DataGridTemplateColumn Header="Dec/Bin" Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -119,10 +118,6 @@
                     <CheckBox x:Name="NetworkPercent" Content="Leave" HorizontalAlignment="Left" Margin="522,11,0,0" VerticalAlignment="Top"  Height="20"/>
                     <xctk:IntegerUpDown x:Name="NetworkPercentNum" HorizontalAlignment="Left" Height="23" Margin="578,8,0,0" VerticalAlignment="Top" Width="45" Maximum="99" Minimum="0" Value="0"/>
                     <Label Content="% of free adresses" HorizontalAlignment="Left" Margin="622,7,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
-
-                    <CheckBox x:Name="NetworksNum" Content="Make at least" HorizontalAlignment="Left" Margin="522,39,0,0" VerticalAlignment="Top"  Height="20"/>
-                    <xctk:IntegerUpDown x:Name="NetworkNumVal" HorizontalAlignment="Left" Height="23" Margin="620,36,0,0" VerticalAlignment="Top" Width="45" Minimum="1" Value="1" />
-                    <Label Content="networks" HorizontalAlignment="Left" Margin="662,34,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
 
                     <Button x:Name="CalculateBtn" Content="Calculate" HorizontalAlignment="Left" Margin="898,39,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
                     <Button x:Name="DrawNetBtn" Content="Draw Net" HorizontalAlignment="Left" Margin="898,7,0,0" VerticalAlignment="Top" Width="75" Click="DrawNetBtn_Click"/>

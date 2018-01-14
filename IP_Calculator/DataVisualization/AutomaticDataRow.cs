@@ -108,7 +108,7 @@ namespace IP_Calculator.DataVisualization
         {
             get
             {
-                return (int.Parse(FreeHosts) - int.Parse(HostsNum)).ToString();
+                return (int.Parse(HostsNum) - int.Parse(FreeHosts)).ToString();
             }
         }
 

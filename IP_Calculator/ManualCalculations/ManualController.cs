@@ -166,7 +166,7 @@ namespace IP_Calculator.ManualCalculations
 
                 HostsNum = ipc.getHostnumber().ToString(),
 
-                HostAddressSize = ipc.getHostBits().ToString(),
+                HostAddressSize = ipc.getHostBits.ToString(),
 
                 NetAddressSize = ipc.getNetworkBits().ToString(),
 

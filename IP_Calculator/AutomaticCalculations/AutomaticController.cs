@@ -190,7 +190,7 @@ namespace IP_Calculator.AutomaticCalculations
                 {
                     Ip = new InternetProtocolAddress(baseIp),
                     Netmask = Byte.Parse((32 - (int)Math.Log(netmask, 2)).ToString()),
-                    HostsNumber = netmask - 3 - (int)(netmask)
+                    HostsNumber = netmask - 3
                 });
                 baseIp += (uint)netmask;
             }
@@ -200,7 +200,7 @@ namespace IP_Calculator.AutomaticCalculations
         private InternalAddressRow CalculateMinimalNetworksNum()
         {
             int networkSize = 1;
-            while (networkSize < discoveredHosts.Count)
+            while (networkSize < discoveredHosts.Count+3)
                 networkSize *= 2;
 
             byte netmask = Byte.Parse((32 - (int)Math.Log(networkSize, 2)).ToString());
@@ -284,7 +284,7 @@ namespace IP_Calculator.AutomaticCalculations
 
                 HostsNum = ipc.getHostnumber().ToString(),
 
-                HostAddressSize = ipc.getHostBits().ToString(),
+                HostAddressSize = ((int)(Math.Pow(2,ipc.getHostBits))-3).ToString(),
 
                 NetAddressSize = ipc.getNetworkBits().ToString(),
 
