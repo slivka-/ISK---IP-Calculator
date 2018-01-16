@@ -17,6 +17,7 @@ using IP_Calculator.DataVisualization;
 using IP_Calculator.ManualCalculations;
 using IP_Calculator.AutomaticCalculations;
 using System.Net;
+using System.IO;
 
 namespace IP_Calculator
 {
@@ -140,7 +141,8 @@ namespace IP_Calculator
 
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
             proc.EnableRaisingEvents = false;
-            proc.StartInfo.FileName = @"Graphic\Graphic\bin\Debug\Graphic.exe";
+            File.WriteAllBytes(@"Graphic.exe", Properties.Resources.Graphic);
+            proc.StartInfo.FileName = @"Graphic.exe";
             proc.StartInfo.Arguments = @"WriteText.txt";
             proc.Start();
 
