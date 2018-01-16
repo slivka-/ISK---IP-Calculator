@@ -107,20 +107,21 @@
                     <xctk:MaskedTextBox x:Name="IpAdressBox" HorizontalAlignment="Left" Height="23" Margin="96,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="99" Mask="099\.099\.099\.099" KeyUp="IpAdressBox_KeyUp"/>
 
                     <Label Content="Hosts amount:" HorizontalAlignment="Left" Margin="8,33,0,0" VerticalAlignment="Top" Width="86"/>
-                    <xctk:IntegerUpDown x:Name="HostsAmount" HorizontalAlignment="Left" Height="23" Margin="96,37,0,0" VerticalAlignment="Top" Width="99" Minimum="1" Value="1" ValueChanged="HostsAmount_ValueChanged" />
+                    <xctk:IntegerUpDown x:Name="HostsAmount" HorizontalAlignment="Left" Height="23" Margin="96,37,0,0" VerticalAlignment="Top" Width="99" Minimum="5" Value="5" ValueChanged="HostsAmount_ValueChanged" />
 
-                    <CheckBox x:Name="ForceMask" Content="Force minimal mask" HorizontalAlignment="Left" Margin="209,11,0,0" VerticalAlignment="Top"  Height="20" Checked="ForceMask_Checked" Unchecked="ForceMask_Checked"/>
-                    <ComboBox  Margin="209,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="Hostbits" SelectionChanged="Hostbits_SelectionChanged"  />
+                    <CheckBox x:Name="ForceMask" Content="Force minimal mask" HorizontalAlignment="Left" Margin="356,39,0,0" VerticalAlignment="Top"  Height="20" Checked="ForceMask_Checked" Unchecked="ForceMask_Checked"/>
+                    <ComboBox  Margin="496,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="Hostbits" SelectionChanged="Hostbits_SelectionChanged"  />
 
-                    <RadioButton x:Name="MinNetworkNumRadio" Content="Minimal number of netwoks" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="348,11,0,0" VerticalAlignment="Top"  Height="20" IsChecked="True"/>
-                    <RadioButton x:Name="MinNetworkSizeRadio" Content="Minimal networks size" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="348,39,0,0" VerticalAlignment="Top"  Height="20" IsChecked="False"/>
+                    <RadioButton x:Name="MinNetworkNumRadio" Content="Minimal number of netwoks" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="209,11,0,0" VerticalAlignment="Top"  Height="20" IsChecked="True"/>
+                    <RadioButton x:Name="MinNetworkSizeRadio" Content="Minimal networks size" GroupName="OptimGroup" HorizontalAlignment="Left" Margin="209,39,0,0" VerticalAlignment="Top"  Height="20" IsChecked="False"/>
 
-                    <CheckBox x:Name="NetworkPercent" Content="Leave" HorizontalAlignment="Left" Margin="522,11,0,0" VerticalAlignment="Top"  Height="20"/>
-                    <xctk:IntegerUpDown x:Name="NetworkPercentNum" HorizontalAlignment="Left" Height="23" Margin="578,8,0,0" VerticalAlignment="Top" Width="45" Maximum="99" Minimum="0" Value="0"/>
-                    <Label Content="% of free adresses" HorizontalAlignment="Left" Margin="622,7,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
+                    <CheckBox x:Name="NetworkPercent" Content="Leave" HorizontalAlignment="Left" Margin="555,24,0,0" VerticalAlignment="Top"  Height="20"/>
+                    <xctk:IntegerUpDown x:Name="NetworkPercentNum" HorizontalAlignment="Left" Height="23" Margin="611,21,0,0" VerticalAlignment="Top" Width="45" Maximum="99" Minimum="0" Value="0"/>
+                    <Label Content="% of free adresses" HorizontalAlignment="Left" Margin="655,20,0,0" VerticalAlignment="Top" Width="200" Height="26"/>
 
                     <Button x:Name="CalculateBtn" Content="Calculate" HorizontalAlignment="Left" Margin="898,39,0,0" VerticalAlignment="Top" Width="75" Click="CalculateBtn_Click"/>
                     <Button x:Name="DrawNetBtn" Content="Draw Net" HorizontalAlignment="Left" Margin="898,7,0,0" VerticalAlignment="Top" Width="75" Click="DrawNetBtn_Click"/>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="30" Margin="205,33,0,0" VerticalAlignment="Top" Width="339"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -13,7 +13,7 @@ namespace IP_Calculator.ManualCalculations
 
         public int hostBits;//netmask bits length
 
-        public int hostsNumber;
+        public int hostsNumber = 5;
 
         public bool forcedMinMask;
 
@@ -74,7 +74,8 @@ namespace IP_Calculator.ManualCalculations
                 networkSize *= 2;
 
             byte netmask = Byte.Parse((32 - (int)Math.Log(networkSize, 2)).ToString());
-
+            if (netmask == 32)
+                netmask = 31;
             byte[] octets = Text2byte(ipAddress);
             return new InternalAddressRow()
             {
@@ -123,7 +124,7 @@ namespace IP_Calculator.ManualCalculations
                 while (networkSize < tempHosts+3)
                     networkSize *= 2;
                 if (forcedMinMask)
-                    while (networkSize > firstMask)
+                    while (networkSize > firstMask*2)
                         networkSize /= 2;
                 if (networkSize != tempHosts + 3)
                     networkSize /= 2;
